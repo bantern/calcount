@@ -1,0 +1,72 @@
+#!/usr/bin/env python
+
+###########################
+# calorie-count           #
+# written by James Masuda #
+# v 1.0 : 08.01.2016      #
+###########################
+
+from datetime import datetime
+import time
+import sys
+
+print (30 * '-')
+print "  C A L O R I E - C O U N T "
+print (30 * '-')
+print ""
+print ""
+
+total_users = int(raw_input("How many users in total? "))
+
+
+# users = {
+#   name: {
+#       goal : 2000,
+#            meals : []
+#               }
+#                       }
+users = {}
+meals = ["breakfast", "lunch", "dinner", "snacks"]
+for _ in range(total_users) :
+    name = raw_input("Enter your name here: ")
+    users[name] = {}
+
+    goal = int(raw_input("Okay %s, what is your target calorie goal? " % (name)))
+    if goal <= 1500 and goal >= 501:
+        print "Awesome goal!"
+    elif goal <= 500:
+        print "You are INSANE!"
+    elif goal >= 2000:
+         print "I think you can do better than that."
+    users[name]["goal"] = goal
+    users[name]["meals"] = []
+
+    for meal in meals :
+        if meal == "snacks" :
+            q = raw_input("Did you eat any snacks today? y/n: ")
+            if not(q == 'y' or q == 'yes') :
+                continue
+        cals = int(raw_input("Enter %s calories: " % meal))
+        users[name]["meals"].append(cals)
+
+    users[name]["total"] = sum(users[name]["meals"])
+
+print "Awesome! Let me tally everything up and see what it looks like!"
+
+#This is just for fun
+def math(s):
+    for c in s:
+        sys.stdout.write( '%s' %c )
+        sys.stdout.flush()
+        time.sleep(0.25)
+math("    ..m..a..t..h..")
+
+now = datetime.now()
+
+print ""
+print "       %s/%s/%s     " % (now.month, now.day, now.year)
+print "  ------------------"
+print "Name             Cals"
+print "  ------------------"
+for name in users :
+    print "{}             {}".format(name, users[name]["total"])
